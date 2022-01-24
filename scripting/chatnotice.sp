@@ -125,7 +125,14 @@ public any Native_Register(Handle plugin, int numParams)
     PushArrayCell(g_Order, idx);
 }
 
-typedef __PrintToChat = function void (int client, const char[] format, any ...);
+void __PrintToChat(int client, char[] format, any... ...)
+{
+    char buffer[1024], buffer2[1024];
+    SetGlobalTransTarget(client);
+    Format(buffer, sizeof(buffer), "\x01%s", format);
+    VFormat(buffer2, sizeof(buffer2), buffer, 3);
+    CSendMessage(client, buffer2);
+}
 
 public Action Timer_Notice(Handle timer)
 {
@@ -146,13 +153,13 @@ public Action Timer_Notice(Handle timer)
 
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
-    /*new Function:fn = GetFunctionByName(null, "PrintToChat"); // new Function: works function does not
+    Function:fn = GetFunctionByName(null, "__PrintToChat");
     if(fn == INVALID_FUNCTION)
     {
         PrintToChatAll("O");
         return Plugin_Continue;
-    }*/
-    __PrintToChat fn = PrintToChat;
+    }
+    
     for(int i = 1; i <= MaxClients; i++)
     {
         Call_StartFunction(plugin, fn);
