@@ -78,8 +78,6 @@ public void OnMapStart()
 
 public void OnPluginStart()
 {
-    g_Order = CreateArray();
-    g_Notices = CreateArray();
     g_Interval = CreateConVar("sm_chatnotice_interval", "6",
         "How many minutes between each notice",
         0,
@@ -93,6 +91,9 @@ public void OnPluginStart()
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+    g_Order = CreateArray();
+    g_Notices = CreateArray();
+
     CreateNative("ChatNotice_Register", Native_Register);
     LogMessage("---------------test4");
     return APLRes_Success;
@@ -101,7 +102,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public any Native_Register(Handle plugin, int numParams)
 {
     LogMessage("---------------test1");
-    /*
     int idx;
     ArrayList args = CreateArray();
     
@@ -115,7 +115,6 @@ public any Native_Register(Handle plugin, int numParams)
     // Push
     PushArrayCell(g_Notices, args);
     PushArrayCell(g_Order, idx);
-     */
 }
 
 public Action Timer_Notice(Handle timer)
