@@ -153,7 +153,7 @@ public Action Timer_Notice(Handle timer)
 
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
-    Function:fn = GetFunctionByName(null, "__PrintToChat");
+    Function fn = GetFunctionByName(null, "__PrintToChat");
     if(fn == INVALID_FUNCTION)
     {
         PrintToChatAll("O");
