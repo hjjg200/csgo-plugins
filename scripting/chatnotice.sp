@@ -84,7 +84,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "chatnotice");
 
-    CreateTimer(g_Interval.FloatValue * 60.0, Timer_Notice);
+    CreateTimer(g_Interval.FloatValue * 1.0, Timer_Notice);
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
@@ -129,9 +129,15 @@ public Action Timer_Notice(Handle timer)
 
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
+    function fn = GetFunctionByName(plugin, "PrintToChat");
+    if(function == INVALID_FUNCTION)
+    {
+        PrintToChatAll("O");
+        return Plugin_Continue;
+    }
     for(int i = 1; i <= MaxClients; i++)
     {
-        Call_StartFunction(plugin, GetFunctionByName(plugin, "PrintToChat"));
+        Call_StartFunction(plugin, fn);
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
