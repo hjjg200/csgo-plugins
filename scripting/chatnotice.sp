@@ -144,15 +144,15 @@ public Action Timer_Notice(Handle timer)
 
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
-    new Function:fn = GetFunctionByName(null, "PrintToChat"); // new Function: works function does not
+    /*new Function:fn = GetFunctionByName(null, "PrintToChat"); // new Function: works function does not
     if(fn == INVALID_FUNCTION)
     {
         PrintToChatAll("O");
         return Plugin_Continue;
-    }
+    }*/
     for(int i = 1; i <= MaxClients; i++)
     {
-        Call_StartFunction(plugin, fn);
+        Call_StartFunction(plugin, PrintToChat);
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
