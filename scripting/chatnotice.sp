@@ -141,9 +141,8 @@ public Action Timer_Notice(Handle timer)
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
-        int out = Call_Finish();
-        if(out == SP_ERROR_NONE)
-            PrintToChatAll("O2");
+
+        PrintToChat(i, "%d", Call_Finish());
     }
 
     return Plugin_Continue;
