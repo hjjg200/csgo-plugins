@@ -129,7 +129,7 @@ public Action Timer_Notice(Handle timer)
 
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
-    function fn = GetFunctionByName(plugin, "PrintToChat");
+    new Function:fn = GetFunctionByName(plugin, "PrintToChat"); // new Function: works function does not
     if(fn == INVALID_FUNCTION)
     {
         PrintToChatAll("O");
