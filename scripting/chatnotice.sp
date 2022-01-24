@@ -73,9 +73,6 @@ ArrayList g_Order;
 
 public void OnPluginStart()
 {
-    g_Notices = CreateArray();
-    g_Order = CreateArray();
-
     g_Interval = CreateConVar("sm_chatnotice_interval", "6",
         "How many minutes between each notice",
         0,
@@ -89,6 +86,9 @@ public void OnPluginStart()
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
+    g_Order = CreateArray();
+    g_Notices = CreateArray();
+
     CreateNative("ChatNotice_Register", Native_Register);
     return APLRes_Success;
 }
