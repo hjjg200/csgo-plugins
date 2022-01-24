@@ -162,7 +162,7 @@ public Action Timer_Notice(Handle timer)
     
     for(int i = 1; i <= MaxClients; i++)
     {
-        Call_StartFunction(plugin, fn);
+        Call_StartFunction(null, fn);
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
