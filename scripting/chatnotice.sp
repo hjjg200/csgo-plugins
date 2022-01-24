@@ -94,13 +94,14 @@ public void OnPluginStart()
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
     CreateNative("ChatNotice_Register", Native_Register);
+    LogMessage("---------------test4");
     return APLRes_Success;
 }
 
 public any Native_Register(Handle plugin, int numParams)
 {
     LogMessage("---------------test1");
-    return;
+    /*
     int idx;
     ArrayList args = CreateArray();
     
@@ -114,6 +115,7 @@ public any Native_Register(Handle plugin, int numParams)
     // Push
     PushArrayCell(g_Notices, args);
     PushArrayCell(g_Order, idx);
+     */
 }
 
 public Action Timer_Notice(Handle timer)

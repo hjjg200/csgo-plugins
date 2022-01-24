@@ -38,6 +38,7 @@ public void OnPluginStart()
             false,
             0.0);
     //g_cvRevivePerRound.IntValue
+    LogMessage("--------------------test5");
 
     // Register command
     RegConsoleCmd("sm_rv", Command_Revive);
