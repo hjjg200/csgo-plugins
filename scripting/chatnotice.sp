@@ -102,7 +102,9 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public any Native_LoadTranslations(Handle plugin, int numParams)
 {
-    LoadTranslations(GetNativeCell(1));
+    char file[32];
+    GetNativeString(1, file, sizeof(file))
+    LoadTranslations(file);
 }
 
 public any Native_Register(Handle plugin, int numParams)
