@@ -95,8 +95,14 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     g_Notices = CreateArray();
 
     CreateNative("ChatNotice_Register", Native_Register);
+    CreateNative("ChatNotice_LoadTranslations", Native_LoadTranslations);
     LogMessage("---------------test4");
     return APLRes_Success;
+}
+
+public any Native_LoadTranslations(Handle plugin, int numParams)
+{
+    LoadTranslations(GetNativeCell(1));
 }
 
 public any Native_Register(Handle plugin, int numParams)

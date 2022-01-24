@@ -11,3 +11,10 @@
  * @param ...     format elements
  */
 native void ChatNotice_Register(const char[] format, ...);
+
+/**
+ * Load requested phrases
+ *
+ * @param file phrases file
+ */
+native void ChatNotice_LoadTranslations(const char[] file);
