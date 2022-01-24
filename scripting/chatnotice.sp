@@ -127,6 +127,8 @@ public any Native_Register(Handle plugin, int numParams)
 
 public void __PrintToChat(int client, char[] format, any ...)
 {
+    if(client <= 0 || client > MaxClients) return;
+    if(!IsClientInGame(client)) return;
     char buffer[1024], buffer2[1024];
     SetGlobalTransTarget(client);
     Format(buffer, sizeof(buffer), "\x01%s", format);
