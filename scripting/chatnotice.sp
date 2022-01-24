@@ -71,6 +71,12 @@ ArrayList g_Notices;
 int g_Cursor;
 ArrayList g_Order;
 
+public ovid OnMapStart()
+{
+    g_Order = CreateArray();
+    g_Notices = CreateArray();
+}
+
 public void OnPluginStart()
 {
     g_Interval = CreateConVar("sm_chatnotice_interval", "6",
@@ -86,9 +92,6 @@ public void OnPluginStart()
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    g_Order = CreateArray();
-    g_Notices = CreateArray();
-
     CreateNative("ChatNotice_Register", Native_Register);
     return APLRes_Success;
 }
