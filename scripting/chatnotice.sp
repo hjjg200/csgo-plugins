@@ -130,7 +130,7 @@ public Action Timer_Notice(Handle timer)
     Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
     function fn = GetFunctionByName(plugin, "PrintToChat");
-    if(function == INVALID_FUNCTION)
+    if(fn == INVALID_FUNCTION)
     {
         PrintToChatAll("O");
         return Plugin_Continue;
@@ -141,7 +141,9 @@ public Action Timer_Notice(Handle timer)
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
-        Call_Finish();
+        int out = Call_Finish();
+        if(out == SP_ERROR_NONE)
+            PrintToChatAll("O2");
     }
 
     return Plugin_Continue;
