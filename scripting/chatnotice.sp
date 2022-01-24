@@ -162,7 +162,7 @@ public Action Timer_Notice(Handle timer)
     
     for(int i = 1; i <= MaxClients; i++)
     {
-        if(!IsClientInGame(client)) continue;
+        if(!IsClientInGame(i)) continue;
         Call_StartFunction(null, fn);
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
