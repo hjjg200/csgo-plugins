@@ -73,6 +73,7 @@ ArrayList g_Order;
 
 public void OnMapStart()
 {
+    LogMessage("---------------test3");
 }
 
 public void OnPluginStart()
