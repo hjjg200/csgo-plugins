@@ -125,7 +125,7 @@ public any Native_Register(Handle plugin, int numParams)
     PushArrayCell(g_Order, idx);
 }
 
-void __PrintToChat(int client, char[] format, any... ...)
+public void __PrintToChat(int client, char[] format, any... ...)
 {
     char buffer[1024], buffer2[1024];
     SetGlobalTransTarget(client);
