@@ -73,12 +73,12 @@ ArrayList g_Order;
 
 public void OnMapStart()
 {
-    g_Order = CreateArray();
-    g_Notices = CreateArray();
 }
 
 public void OnPluginStart()
 {
+    g_Order = CreateArray();
+    g_Notices = CreateArray();
     g_Interval = CreateConVar("sm_chatnotice_interval", "6",
         "How many minutes between each notice",
         0,
