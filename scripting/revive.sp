@@ -48,6 +48,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "revive");
 
+    LogMessage("--------------------test0");
     ChatNotice_Register(" \x04%t", "Instruct command", "\x05!rv\x04");
 }
 

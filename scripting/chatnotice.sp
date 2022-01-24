@@ -95,7 +95,7 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public any Native_Register(Handle plugin, int numParams)
 {
-    LogMessage("test1");
+    LogMessage("---------------test1");
     int idx;
     ArrayList args = CreateArray();
     
