@@ -125,8 +125,6 @@ public any Native_Register(Handle plugin, int numParams)
     PushArrayCell(g_Order, idx);
 }
 
-public 
-
 public Action Timer_Notice(Handle timer)
 {
     int size = GetArraySize(g_Notices);
