@@ -125,7 +125,7 @@ public any Native_Register(Handle plugin, int numParams)
     PushArrayCell(g_Order, idx);
 }
 
-functag __PrintToChat void:public(int client, const char[] format, any... ...);
+typedef __PrintToChat = function void (int client, const char[] format, ...);
 
 public Action Timer_Notice(Handle timer)
 {
