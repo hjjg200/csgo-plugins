@@ -125,6 +125,8 @@ public any Native_Register(Handle plugin, int numParams)
     PushArrayCell(g_Order, idx);
 }
 
+public 
+
 public Action Timer_Notice(Handle timer)
 {
     int size = GetArraySize(g_Notices);
@@ -150,9 +152,10 @@ public Action Timer_Notice(Handle timer)
         PrintToChatAll("O");
         return Plugin_Continue;
     }*/
+    Function fn = PrintToChat;
     for(int i = 1; i <= MaxClients; i++)
     {
-        Call_StartFunction(plugin, PrintToChat);
+        Call_StartFunction(plugin, fn);
         Call_PushCell(i);
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
