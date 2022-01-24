@@ -7,8 +7,7 @@
 /**
  * Register a chat notice
  *
- * @param key     Unique key of the notice
- * @param lang    Language code(e.g. en, es, ko) of the added notice
- * @param msg     char[256]; Notice message
+ * @param format  char[256]; Notice message format
+ * @param ...     format elements
  */
-native void ChatNotice_Register(const char[] key, const char[] lang, const char[] msg);
+native void ChatNotice_Register(const char[] format, ...);

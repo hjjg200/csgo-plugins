@@ -65,22 +65,17 @@ Action timer
 }
  */
 
-ConVar g_DefaultLangCode;
 ConVar g_Interval;
 
 ArrayList g_Notices;
-StringMap g_NoticeIndices;
 int g_Cursor;
 ArrayList g_Order;
 
 public void OnPluginStart()
 {
     g_Notices = CreateArray();
-    g_NoticeIndices = CreateTrie();
     g_Order = CreateArray();
 
-    g_DefaultLangCode = CreateConVar("sm_chatnotice_default_lang_code", "en",
-        "Default language code for chat notices");
     g_Interval = CreateConVar("sm_chatnotice_interval", "6",
         "How many minutes between each notice",
         0,
@@ -100,37 +95,19 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public any Native_Register(Handle plugin, int numParams)
 {
-    /*
-    key lang msg
-     */
-
-    char key[64], lang[8], msg[256];
-
-    GetNativeString(1, key, sizeof(key));
-    GetNativeString(2, lang, sizeof(lang));
-    GetNativeString(3, msg, sizeof(msg));
-
-    if(-1 == GetLanguageByCode(lang))
-    {
-        LogError("No language found for %s while registering %s", lang, key);
-        return;
-    }
-
     int idx;
-    StringMap msgmap;
-    if(GetTrieValue(g_NoticeIndices, key, idx))
+    ArrayList args = CreateArray();
+    
+    // 0: plugin 1: format 2: ...
+    PushArrayCell(args, plugin);
+    for(int i = 1; i <= numParams; i++)
     {
-        msgmap = GetArrayCell(g_Notices, idx);
-    }
-    else
-    {
-        msgmap = CreateTrie();
-        idx = PushArrayCell(g_Notices, msgmap);
-        SetTrieValue(g_NoticeIndices, key, idx, false);
-        PushArrayCell(g_Order, idx);
+        PushArrayCell(args, GetNativeCell(i));
     }
 
-    SetTrieString(msgmap, lang, msg, true);
+    // Push
+    PushArrayCell(g_Notices, args);
+    PushArrayCell(g_Order, idx);
 }
 
 public Action Timer_Notice(Handle timer)
@@ -147,28 +124,18 @@ public Action Timer_Notice(Handle timer)
         ShuffleOrder();
     }
 
-    StringMap msgmap = GetArrayCell(g_Notices, GetArrayCell(g_Order, g_Cursor));
+    ArrayList args = GetArrayCell(g_Notices, GetArrayCell(g_Order, g_Cursor));
     g_Cursor++;
 
-    char lang[8];
-    char def[8];
-    char buffer[256];
-
-    g_DefaultLangCode.GetString(def, 8);
+    Handle plugin = GetArrayCell(args, 0);
+    int len = GetArraySize(args);
     for(int i = 1; i <= MaxClients; i++)
     {
-        GetLanguageInfo(GetClientLanguage(i), lang, 8);
-        if(GetTrieString(msgmap, lang, buffer, sizeof(buffer)))
-        {
-            PrintToChat(i, buffer);
-            continue;
-        }
-
-        if(GetTrieString(msgmap, def, buffer, sizeof(buffer)))
-        {
-            PrintToChat(i, buffer);
-            continue;
-        }
+        Call_StartFunction(plugin, GetFunctionByName(plugin, "PrintToChat"));
+        Call_PushCell(i);
+        for(int j = 1; j < len; j++)
+            Call_PushCell(GetArrayCell(args, j));
+        Call_Finish();
     }
 
     return Plugin_Continue;

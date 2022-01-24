@@ -48,8 +48,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "revive");
 
-    ChatNotice_Register("revive", "en", " \x04You can revive by typing \x05!rv");
-    ChatNotice_Register("revive", "ko", " \x05!rv\x04를 입력하여 부활하세요")
+    ChatNotice_Register("revive", " \x04%t", "Instruct command", "\x05!rv\x04");
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
