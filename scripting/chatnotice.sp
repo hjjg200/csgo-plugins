@@ -70,10 +70,12 @@ ConVar g_Interval;
 ArrayList g_Notices;
 int g_Cursor;
 ArrayList g_Order;
+Function g_PrintToChat;
 
 public void OnMapStart()
 {
     LogMessage("---------------test3");
+    g_PrintToChat = GetFunctionByName(null, "__PrintToChat");
 }
 
 public void OnPluginStart()
@@ -112,9 +114,7 @@ public any Native_Register(Handle plugin, int numParams)
     LogMessage("---------------test1");
     int idx;
     ArrayList args = CreateArray();
-    
-    // 0: plugin 1: format 2: ...
-    PushArrayCell(args, plugin);
+
     for(int i = 1; i <= numParams; i++)
     {
         PushArrayCell(args, GetNativeCell(i));
@@ -151,24 +151,17 @@ public Action Timer_Notice(Handle timer)
     ArrayList args = GetArrayCell(g_Notices, GetArrayCell(g_Order, g_Cursor));
     g_Cursor++;
 
-    Handle plugin = GetArrayCell(args, 0);
     int len = GetArraySize(args);
-    Function fn = GetFunctionByName(null, "__PrintToChat");
-    if(fn == INVALID_FUNCTION)
-    {
-        PrintToChatAll("O");
-        return Plugin_Continue;
-    }
     
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
-        Call_StartFunction(null, fn);
+        Call_StartFunction(null, g_PrintToChat);
         Call_PushCell(i);
-        for(int j = 1; j < len; j++)
+        for(int j = 0; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
-        PrintToChat(i, "%d", Call_Finish());
+        Call_Finish();
     }
 
     return Plugin_Continue;
