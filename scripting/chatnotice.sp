@@ -131,7 +131,7 @@ public void __PrintToChat(int client, char[] format, any ...)
     SetGlobalTransTarget(client);
     Format(buffer, sizeof(buffer), "\x01%s", format);
     VFormat(buffer2, sizeof(buffer2), buffer, 3);
-    CSendMessage(client, buffer2);
+    PrintToChat(client, buffer2);
 }
 
 public Action Timer_Notice(Handle timer)
