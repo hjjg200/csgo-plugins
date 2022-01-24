@@ -48,7 +48,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "revive");
 
-    ChatNotice_Register("revive", " \x04%t", "Instruct command", "\x05!rv\x04");
+    ChatNotice_Register(" \x04%t", "Instruct command", "\x05!rv\x04");
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
