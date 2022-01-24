@@ -71,7 +71,7 @@ ArrayList g_Notices;
 int g_Cursor;
 ArrayList g_Order;
 
-public ovid OnMapStart()
+public void OnMapStart()
 {
     g_Order = CreateArray();
     g_Notices = CreateArray();
