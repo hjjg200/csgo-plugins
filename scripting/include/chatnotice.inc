@@ -17,9 +17,9 @@ native void ChatNotice_Register(const char[] format, any ...);
  */
 public void ChatNotice_PrintToChat(int client, const char[] format, any ...)
 {
-    char buffer[1024], buffer2[1024];
+    char /*buffer[1024], */buffer2[1024];
     SetGlobalTransTarget(client);
-    Format(buffer, sizeof(buffer), "\x01%s", format);
-    VFormat(buffer2, sizeof(buffer2), buffer, 3);
+    //Format(buffer, sizeof(buffer), "\x01%s", format);
+    VFormat(buffer2, sizeof(buffer2), format, 3);
     PrintToChat(client, buffer2);
 }
