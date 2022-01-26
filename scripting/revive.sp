@@ -37,22 +37,16 @@ public void OnPluginStart()
             0.0,
             false,
             0.0);
-    //g_cvRevivePerRound.IntValue
-    LogMessage("--------------------test5");
 
     // Register command
     RegConsoleCmd("sm_rv", Command_Revive);
 
-    //
     HookEvent("round_start", OnRoundStart, EventHookMode_PostNoCopy);
     HookEvent("player_death", OnPlayerDeath);
 
     AutoExecConfig(true, "revive");
 
     LoadTranslations("revive.phrases");
-
-    LogMessage("--------------------test0");
-    //ChatNotice_Register(" abcd\x04%d %d", 3, 4);
     ChatNotice_Register("\x04%t", "Instruct command", "\x05!rv\x04");
 }
 
