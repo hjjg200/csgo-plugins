@@ -95,7 +95,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public any Native_Register(Handle plugin, int numParams)
 {
-    int idx;
     ArrayList args = CreateArray();
 
     PushArrayCell(args, plugin);
@@ -110,8 +109,7 @@ public any Native_Register(Handle plugin, int numParams)
     }
 
     // Push
-    PushArrayCell(g_Notices, args);
-    PushArrayCell(g_Order, idx);
+    PushArrayCell(g_Order, PushArrayCell(g_Notices, args));
 }
 
 public Action Timer_Notice(Handle timer)
@@ -137,6 +135,8 @@ public Action Timer_Notice(Handle timer)
 
     char format[1024];
     GetArrayString(args, 1, format, sizeof(format));
+
+    PrintToChatAll("aaa %s", format);
 
     for(int i = 1; i <= MaxClients; i++)
     {
