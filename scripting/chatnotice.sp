@@ -136,14 +136,12 @@ public Action Timer_Notice(Handle timer)
     char format[1024];
     GetArrayString(args, 1, format, sizeof(format));
 
-    PrintToChatAll("aaa %s", format);
-
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
         Call_StartFunction(plugin, fn);
         Call_PushCell(i);
-        Call_PushString(" a2ef\x04%t");
+        Call_PushString(format);
         for(int j = 2; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
