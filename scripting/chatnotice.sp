@@ -101,7 +101,7 @@ public any Native_Register(Handle plugin, int numParams)
 
     char format[1024];
     GetNativeString(1, format, sizeof(format));
-    PushArrayString(args, format);
+    PrintToConsoleAll("----------len: %d", PushArrayString(args, format));
 
     for(int i = 2; i <= numParams; i++)
     {
@@ -137,7 +137,6 @@ public Action Timer_Notice(Handle timer)
     GetArrayString(args, 1, format, sizeof(format));
 
     PrintToChatAll("aaa %s", format);
-    
 
     for(int i = 1; i <= MaxClients; i++)
     {
