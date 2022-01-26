@@ -130,8 +130,6 @@ public Action Timer_Notice(Handle timer)
     Handle plugin = GetArrayCell(args, 0);
     Function fn = GetFunctionByName(plugin, "ChatNotice_PrintToChat");
 
-    PrintToChatAll("%d", fn == INVALID_FUNCTION);
-
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
@@ -140,7 +138,7 @@ public Action Timer_Notice(Handle timer)
         for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
-        Call_Finish();
+        PrintToChat(i, "FINISH: %d", Call_Finish());
     }
 
     return Plugin_Continue;
