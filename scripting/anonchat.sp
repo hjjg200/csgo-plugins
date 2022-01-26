@@ -258,7 +258,10 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
     // Get chatNo
     int chatNo = g_epoch[g_epoch_cursor + add];
     int chatNoPrinted = chatNo + 1;
-    //g_epoch_cursor++;
+
+    // Set chatNo owner
+    g_chatSteamIDIndices[chatNo] = g_clientSteamIDIndices[client];
+
     g_batch_cursor++;
 
     char steamID[STEAM_ID_LENGTH];
@@ -272,7 +275,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
         if(i == client)
         {
             PrintToChat(i, " \x03#%d: \x01%s", chatNoPrinted, sArgs);
-            continue;
+            //continue;
         }
 
         StringMap muted = g_clientMutedSteamIDMaps[i];
