@@ -52,7 +52,7 @@ public void OnPluginStart()
     LoadTranslations("revive.phrases");
 
     LogMessage("--------------------test0");
-    ChatNotice_Register(" abcd\x04%d %d", 3, 4);
+    //ChatNotice_Register(" abcd\x04%d %d", 3, 4);
     ChatNotice_Register(" efgh\x04%t", "Instruct command", "\x05!rv\x04");
 }
 
