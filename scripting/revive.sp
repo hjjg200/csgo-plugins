@@ -47,7 +47,7 @@ public void OnPluginStart()
     AutoExecConfig(true, "revive");
 
     LoadTranslations("revive.phrases");
-    ChatNotice_Register("\x05%t", "Instruct command", "!rv");
+    ChatNotice_Register("\x05%t", "revive.command", "!rv");
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
@@ -62,8 +62,9 @@ public void OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
     // TODO: show remaining revive count
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    PrintHintText(client, "남은 부활: \x04%d\n\x04!rv\x01로 부활 가능", 
-        g_cvRevivePerRound.IntValue - playerReviveCount[client]);
+    PrintHintText(client, " \x05%t: \x01%d\n\x05%t", "revive.remainingLives", 
+        g_cvRevivePerRound.IntValue - playerReviveCount[client],
+        "revive.command", "!rv");
 }
 
 /*
@@ -107,7 +108,7 @@ public Action Command_Revive(int client, int argc)
         if (team0 != team1)
         {
             // TODO: say you can only revive from a teammate
-            PrintHintText(client, "\x04같은 팀원\x01에게서만 부할 가능");
+            PrintHintText(client, " \x05%t", "revive.teammatesOnly");
             return Plugin_Handled;
         }
 
@@ -115,7 +116,7 @@ public Action Command_Revive(int client, int argc)
         if (playerReviveCount[client] >= g_cvRevivePerRound.IntValue)
         {
             // TODO: show reached limit
-            PrintHintText(client, "이번 라운드 부활 불가능");
+            PrintHintText(client, " \x05%t", "revive.livesAllConsumed");
             return Plugin_Handled;
         }
         playerReviveCount[client]++;

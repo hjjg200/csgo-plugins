@@ -85,8 +85,8 @@ on map start {
 }
  */
 
-#define EPOCH_SIZE 4
-#define BATCH_SIZE 2
+#define EPOCH_SIZE 1000
+#define BATCH_SIZE 10
 
 #define STEAM_ID_LENGTH 32
 
@@ -124,9 +124,9 @@ public void OnPluginStart()
 
     LoadTranslations("anonchat.phrases");
 
-    ChatNotice_Register("\x05%t", "anonchat.command.mute", "!mu", "anonchat.chatno");
-    ChatNotice_Register("\x05%t", "anonchat.command.muteall", "!muall");
-    ChatNotice_Register("\x05%t", "anonchat.command.unmuteall", "!unmuall");
+    ChatNotice_Register("\x05%t", "anonchat.command.mute", "!mu");
+    ChatNotice_Register("\x05%t", "anonchat.command.muteAll", "!muall");
+    ChatNotice_Register("\x05%t", "anonchat.command.unmuteAll", "!unmuall");
 
     RegConsoleCmd("sm_mu", Command_Mute);
     RegConsoleCmd("sm_muall", Command_MuteAll);
@@ -139,7 +139,7 @@ public Action Command_Mute(int client, int argc)
 
     if(argc != 1)
     {
-        PrintToChat(client, "\x05%t", "anonchat.command.mute", "!mu", "anonchat.chatno");
+        PrintToChat(client, " \x05%t", "anonchat.command.mute", "!mu");
         return Plugin_Handled;
     }
 
@@ -152,25 +152,23 @@ public Action Command_Mute(int client, int argc)
     int chatNo = chatNoPrinted - 1;
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
     {
-        PrintToChat(client, "Invalid chat no");
+        PrintToChat(client, " \x05%t", "anonchat.invalidChatNo");
         return Plugin_Handled;
     }
-
-    PrintToChat(client, "Read chatNo: %d", chatNo);
 
     switch(Mute(client, chatNo))
     {
     case -1:
     {
-        PrintToChat(client, "User not found");
+        PrintToChat(client, " \x05%t", "anonchat.userNotFound");
     }
     case 0:
     {
-        PrintToChat(client, "Already muted");
+        PrintToChat(client, " \x05%t", "anonchat.alreadyMuted");
     }
     case 1:
     {
-        PrintToChat(client, "Muted the player");
+        PrintToChat(client, " \x05%t", "anonchat.mutedPlayer");
     }
     }
 
@@ -182,7 +180,7 @@ public Action Command_MuteAll(int client, int argc)
     if(client < 1) return Plugin_Handled;
 
     MuteAll(client);
-    PrintToChat(client, "Muted all players");
+    PrintToChat(client, " \x05%t", "anonchat.mutedAll");
 
     return Plugin_Handled;
 }
@@ -192,7 +190,7 @@ public Action Command_UnmuteAll(int client, int argc)
     if(client < 1) return Plugin_Handled;
 
     UnmuteAll(client);
-    PrintToChat(client, "Unmuted all players");
+    PrintToChat(client, " \x05%t", "anonchat.unmutedAll");
     
     return Plugin_Handled;
 }

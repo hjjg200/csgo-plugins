@@ -1,22 +1,22 @@
 "Phrases"
 {
-    "Remaining lives"
+    "revive.remainingLives"
     {
         "en" "Remaining Lives"
         "ko" "남은 부활"
     }
-    "Instruct command"
+    "revive.command"
     {
         "#format" "{1:s}"
         "en" "Revive by typing {1}"
         "ko" "{1}를 입력하여 부활하세요"
     }
-    "Teammate only"
+    "revive.teammatesOnly"
     {
         "en" "You can revive from teammates only"
         "ko" "팀원에게서만 부활할 수 있습니다"
     }
-    "Lives consumed"
+    "revive.livesAllConsumed"
     {
         "en" "No more lives remain"
         "ko" "모든 목숨을 소모했습니다"
