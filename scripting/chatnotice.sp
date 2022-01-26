@@ -81,7 +81,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "chatnotice");
 
-    CreateTimer(g_Interval.FloatValue * 1.0, Timer_Notice, _, TIMER_REPEAT);
+    CreateTimer(g_Interval.FloatValue * 60.0, Timer_Notice, _, TIMER_REPEAT);
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
