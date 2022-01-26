@@ -138,17 +138,15 @@ public Action Command_Mute(int client, int argc)
 
     if(argc != 1)
     {
-        PrintToChat(client, "!mu <chat no> to mute");
+        PrintToChat(client, "\x05%t", "anonchat.command.mute", "!mu", "anonchat.chatno");
         return Plugin_Handled;
     }
 
+    // Get chat no
     char arg[16];
     int from = 0;
-
     GetCmdArg(1, arg, sizeof(arg));
     if(arg[0] == '#') from++;
-
-    // Check chat no
     int chatNo = -1;
     StringToIntEx(arg[from], chatNo);
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
@@ -157,18 +155,23 @@ public Action Command_Mute(int client, int argc)
         return Plugin_Handled;
     }
 
-    int idx = g_chatSteamIDIndices[chatNo];
-    char steamID[STEAM_ID_LENGTH];
+    PrintToChat(client, "Read chatNo: %d", chatNo);
 
-    if(idx < 0 || idx >= GetArraySize(g_steamIDs))
+    switch(Mute(client, chatNo))
+    {
+    case -1:
     {
         PrintToChat(client, "User not found");
-        return Plugin_Handled;
     }
-
-    GetArrayString(g_steamIDs, idx, steamID, STEAM_ID_LENGTH);
-
-    
+    case 0:
+    {
+        PrintToChat(client, "Already muted");
+    }
+    case 1:
+    {
+        PrintToChat(client, "Muted the player");
+    }
+    }
 
     return Plugin_Handled;
 }

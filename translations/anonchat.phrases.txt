@@ -19,7 +19,7 @@
     }
     "anonchat.command.unmuteall"
     {
-        "#format" "{1:s}"s
+        "#format" "{1:s}"
         "en" "Type {1} to unmute players you muted"
         "ko" "{1}을 입력하여 모든 뮤트를 해제하세요"
     }
