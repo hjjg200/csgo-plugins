@@ -10,7 +10,7 @@
  * @param format  char[256]; Notice message format
  * @param ...     format elements
  */
-native void ChatNotice_Register(const char[] format, any... ...);
+native void ChatNotice_Register(const char[] format, any ...);
 
 /**
  * PrintToChat forwarder
