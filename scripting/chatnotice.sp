@@ -101,7 +101,9 @@ public any Native_Register(Handle plugin, int numParams)
 
     char format[1024];
     GetNativeString(1, format, sizeof(format));
-    LogMessage("-------- original len: %d", GetNativeStringLength(1));
+    int l2;
+    GetNativeStringLength(1, l2);
+    LogMessage("-------- original len: %d", l2);
     PushArrayString(args, format);
     LogMessage("----------len: %d", SetArrayString(args, 1, format));
 
