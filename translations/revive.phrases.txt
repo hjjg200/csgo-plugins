@@ -9,7 +9,13 @@
     {
         "#format" "{1:s}"
         "en" "Revive by typing {1}"
-        "ko" "{1}를 입력하여 부활하세요"
+        "ko" "{1}를 입력해서 부활하세요"
+    }
+    "revive.bindTip"
+    {
+        "#format" "{1:s}"
+        "en" "{1} — you can enter this in console to press v to revive"
+        "ko" "{1} — 콘솔에 입력하면 v키로 부활할 수 있습니다"
     }
     "revive.teammatesOnly"
     {

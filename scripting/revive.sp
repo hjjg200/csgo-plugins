@@ -48,6 +48,7 @@ public void OnPluginStart()
 
     LoadTranslations("revive.phrases");
     ChatNotice_Register("\x05%t", "revive.command", "!rv");
+    ChatNotice_Register("\x05%t", "revive.bindTip", "bind v \"say !rv\"")
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
