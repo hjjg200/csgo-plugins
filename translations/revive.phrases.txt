@@ -7,6 +7,7 @@
     }
     "Instruct command"
     {
+        "#format" "{1:s}"
         "en" "Revive by typing {1}"
         "ko" "{1}를 입력하여 부활하세요"
     }

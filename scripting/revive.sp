@@ -53,7 +53,7 @@ public void OnPluginStart()
 
     LogMessage("--------------------test0");
     //ChatNotice_Register(" abcd\x04%d %d", 3, 4);
-    ChatNotice_Register(" efgh\x04%t", "Instruct command", 356);//"\x05!rv\x04");
+    ChatNotice_Register("\x04%t", "Instruct command", "\x05!rv\x04");
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
