@@ -129,7 +129,9 @@ public Action Timer_Notice(Handle timer)
     int len = GetArraySize(args);
     Handle plugin = GetArrayCell(args, 0);
     Function fn = GetFunctionByName(plugin, "ChatNotice_PrintToChat");
-    
+
+    PrintToChatAll("%d", fn == INVALID_FUNCTION);
+
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
