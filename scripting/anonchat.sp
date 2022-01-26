@@ -147,7 +147,7 @@ public Action Command_Mute(int client, int argc)
     int from = 0;
     GetCmdArg(1, arg, sizeof(arg));
     if(arg[0] == '#') from++;
-    int chatNoPrinted = StringToIntEx(arg[from]);
+    int chatNoPrinted = StringToInt(arg[from]); // StringToIntEx also returns 0 on failure
     int chatNo = chatNoPrinted - 1;
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
     {
