@@ -147,7 +147,7 @@ public Action Timer_Notice(Handle timer)
         for(int j = 2; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
-        PrintToChat(i, "FINISH: %d", Call_Finish());
+        Call_Finish();
     }
 
     return Plugin_Continue;
