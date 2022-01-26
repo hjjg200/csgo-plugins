@@ -147,8 +147,8 @@ public Action Command_Mute(int client, int argc)
     int from = 0;
     GetCmdArg(1, arg, sizeof(arg));
     if(arg[0] == '#') from++;
-    int chatNo = -1;
-    StringToIntEx(arg[from], chatNo);
+    int chatNoPrinted = StringToIntEx(arg[from]);
+    int chatNo = chatNoPrinted - 1;
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
     {
         PrintToChat(client, "Invalid chat no");
@@ -257,6 +257,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
     // Get chatNo
     int chatNo = g_epoch[g_epoch_cursor + add];
+    int chatNoPrinted = chatNo + 1;
     //g_epoch_cursor++;
     g_batch_cursor++;
 
@@ -270,7 +271,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
         if(i == client)
         {
-            PrintToChat(i, " \x03#%d: \x01%s", chatNo, sArgs);
+            PrintToChat(i, " \x03#%d: \x01%s", chatNoPrinted, sArgs);
             continue;
         }
 
@@ -281,11 +282,11 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
         if(CheckCommandAccess(i, "sm_admin", ADMFLAG_GENERIC))
         {
-            PrintToChat(i, " \x04#%d %N: \x01%s", chatNo, client, sArgs);
+            PrintToChat(i, " \x04#%d %N: \x01%s", chatNoPrinted, client, sArgs);
         }
         else
         {
-            PrintToChat(i, " \x04#%d: \x01%s", chatNo, sArgs);
+            PrintToChat(i, " \x04#%d: \x01%s", chatNoPrinted, sArgs);
         }
     }
     return Plugin_Handled;
