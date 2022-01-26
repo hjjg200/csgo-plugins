@@ -2,6 +2,7 @@
 {
     "anonchat.command.mute"
     {
+        "#format" "{1:s},{2:s}"
         "en" "Type {1} {2} to mute the player"
         "ko" "{1} {2}를 입력하여 작성자를 뮤트하세요"
     }
