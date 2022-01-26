@@ -1,4 +1,5 @@
 #include <sourcemod>
+#include <sdktools>
 #include <chatnotice>
 
 public Plugin myinfo =
