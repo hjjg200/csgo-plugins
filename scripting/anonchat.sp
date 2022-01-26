@@ -123,7 +123,9 @@ public void OnPluginStart()
 
     LoadTranslations("anonchat.phrases");
 
-    ChatNotice_Register("\x04%t", "anonchat.command.mute", "\x05!mu", "anonchat.chatno");
+    ChatNotice_Register("\x05%t", "anonchat.command.mute", "!mu", "anonchat.chatno");
+    ChatNotice_Register("\x05%t", "anonchat.command.muteall", "!muall");
+    ChatNotice_Register("\x05%t", "anonchat.command.unmuteall", "!unmuall");
 
     RegConsoleCmd("sm_mu", Command_Mute);
     RegConsoleCmd("sm_muall", Command_MuteAll);
