@@ -85,8 +85,8 @@ on map start {
 }
  */
 
-#define EPOCH_SIZE 9
-#define BATCH_SIZE 3
+#define EPOCH_SIZE 4
+#define BATCH_SIZE 2
 
 #define STEAM_ID_LENGTH 32
 
@@ -286,7 +286,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
         if(i == client)
         {
             PrintToChat(i, " \x03#%d: \x01%s", chatNoPrinted, sArgs);
-            //continue;
+            continue;
         }
 
         StringMap muted = g_clientMutedSteamIDMaps[i];
