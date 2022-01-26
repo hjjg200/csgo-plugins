@@ -85,8 +85,8 @@ on map start {
 }
  */
 
-#define EPOCH_SIZE 1000
-#define BATCH_SIZE 10
+#define EPOCH_SIZE 9
+#define BATCH_SIZE 3
 
 #define STEAM_ID_LENGTH 32
 
