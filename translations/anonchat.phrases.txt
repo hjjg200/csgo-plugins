@@ -16,7 +16,7 @@
     {
         "#format" "{1:s}"
         "en" "{1} — unmute players you muted"
-        "ko" "{1} — 모든 뮤트를 해제하기"
+        "ko" "{1} — 모든 뮤트 해제하기"
     }
     "anonchat.invalidChatNo"
     {
