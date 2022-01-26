@@ -47,7 +47,7 @@ public void OnPluginStart()
     AutoExecConfig(true, "revive");
 
     LoadTranslations("revive.phrases");
-    ChatNotice_Register("\x04%t", "Instruct command", "\x05!rv34r3j4r34jr34jr34r\x04");
+    ChatNotice_Register("\x04%t", "Instruct command", "\x05!rv\x04");
 }
 
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)

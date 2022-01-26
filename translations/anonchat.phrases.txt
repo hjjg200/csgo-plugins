@@ -1,0 +1,23 @@
+"Phrases"
+{
+    "anonchat.command.mute"
+    {
+        "en" "Type {1} {2} to mute the player"
+        "ko" "{1} {2}를 입력하여 작성자를 뮤트하세요"
+    }
+    "anonchat.chatno"
+    {
+        "en" "chat No."
+        "ko" "채팅 번호"
+    }
+    "anonchat.command.muteall"
+    {
+        "en" "Type {1} to disable chat"
+        "ko" "{1}을 입력하여 채팅을 비활성화하세요"
+    }
+    "anonchat.command.unmuteall"
+    {
+        "en" "Type {1} to unmute players you muted"
+        "ko" "{1}을 입력하여 모든 뮤트를 해제하세요"
+    }
+}

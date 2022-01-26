@@ -121,22 +121,13 @@ public void OnPluginStart()
         g_clientMutedSteamIDMaps[i] = CreateTrie();
     }
 
-    ChatNotice_Register("anonchat1", "en", " \x04Type \x05!mu <chat no> \x04 to mute the player");
-    ChatNotice_Register("anonchat1", "ko", " \x05!mu <채팅 번호>\x04를 입력하여 작성자를 뮤트하세요");
+    LoadTranslations("anonchat.phrases");
 
-    ChatNotice_Register("anonchat2", "en", " \x04Type \x05!muall \x04 to disable chat");
-    ChatNotice_Register("anonchat2", "ko", " \x05!muall\x04을 입력하여 채팅을 비활성화하세요");
-
-    ChatNotice_Register("anonchat3", "en", " \x04Type \x05!unmuall \x04 to unmute players you muted");
-    ChatNotice_Register("anonchat3", "ko", " \x05!unmuall\x04을 입력하여 모든 뮤트를 해제하세요");
+    ChatNotice_Register("\x04%t", "anonchat.command.mute", "\x05!mu", "%t\x04", "anonchat.chatno");
 
     RegConsoleCmd("sm_mu", Command_Mute);
     RegConsoleCmd("sm_muall", Command_MuteAll);
     RegConsoleCmd("sm_unmuall", Command_UnmuteAll);
-    
-    //TODO: register mute command
-    //TODO: register unmute all command
-    //TODO: register mute all command
 }
 
 public Action Command_Mute(int client, int argc)
