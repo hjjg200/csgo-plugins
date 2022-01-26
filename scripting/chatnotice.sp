@@ -95,18 +95,13 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 public any Native_Register(Handle plugin, int numParams)
 {
-    ArrayList args = CreateArray();
+    ArrayList args = CreateArray(1024);
 
     PushArrayCell(args, plugin);
 
     char format[1024];
     GetNativeString(1, format, sizeof(format));
-    int l2;
-    GetNativeStringLength(1, l2);
-    LogMessage("-------- original len: %d", l2);
-    LogMessage("-------- strlen: %d", strlen(format));
     PushArrayString(args, format);
-    LogMessage("----------len: %d", SetArrayString(args, 1, format));
 
     for(int i = 2; i <= numParams; i++)
     {
