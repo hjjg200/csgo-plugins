@@ -99,7 +99,12 @@ public any Native_Register(Handle plugin, int numParams)
     ArrayList args = CreateArray();
 
     PushArrayCell(args, plugin);
-    for(int i = 1; i <= numParams; i++)
+
+    char format[1024];
+    GetNativeString(1, format, sizeof(format));
+    PushArrayString(args, format);
+
+    for(int i = 2; i <= numParams; i++)
     {
         PushArrayCell(args, GetNativeCell(i));
     }
@@ -130,12 +135,16 @@ public Action Timer_Notice(Handle timer)
     Handle plugin = GetArrayCell(args, 0);
     Function fn = GetFunctionByName(plugin, "ChatNotice_PrintToChat");
 
+    char format[1024];
+    GetArrayString(args, 1, format, sizeof(format));
+
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
         Call_StartFunction(plugin, fn);
         Call_PushCell(i);
-        for(int j = 1; j < len; j++)
+        Cell_PushString(format);
+        for(int j = 2; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
         PrintToChat(i, "FINISH: %d", Call_Finish());
