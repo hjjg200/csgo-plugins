@@ -180,12 +180,18 @@ public Action Command_MuteAll(int client, int argc)
 {
     if(client < 1) return Plugin_Handled;
 
+    MuteAll(client);
+    PrintToChat(client, "Muted all players");
+
     return Plugin_Handled;
 }
 
 public Action Command_UnmuteAll(int client, int argc)
 {
     if(client < 1) return Plugin_Handled;
+
+    UnmuteAll(client);
+    PrintToChat(client, "Unmuted all players");
     
     return Plugin_Handled;
 }
@@ -333,12 +339,20 @@ public int Mute(int client, int chatNo)
     return 0;
 }
 
+public void MuteAll(int client)
+{
+    g_clientMuteAll[client] = true;
+}
+
 public int UnmuteAll(int client)
 {
     StringMap muted = g_clientMutedSteamIDMaps[client];
     int size = GetTrieSize(muted);
-
     ClearTrie(muted);
+
+    if(g_clientMuteAll[client] == true)
+        g_clientMuteAll[client] = false;
+
     return size;
 }
 
