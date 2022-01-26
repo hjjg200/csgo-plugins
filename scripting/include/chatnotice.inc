@@ -13,8 +13,13 @@
 native void ChatNotice_Register(const char[] format, any... ...);
 
 /**
- * Load requested phrases
- *
- * @param file phrases file
+ * PrintToChat forwarder
  */
-native void ChatNotice_LoadTranslations(const char[] file);
+public void ChatNotice_PrintToChat(int client, const char[] format, any ...)
+{
+    char buffer[1024], buffer2[1024];
+    SetGlobalTransTarget(client);
+    Format(buffer, sizeof(buffer), "\x01%s", format);
+    VFormat(buffer2, sizeof(buffer2), buffer, 3);
+    PrintToChat(client, buffer2);
+}

@@ -70,13 +70,6 @@ ConVar g_Interval;
 ArrayList g_Notices;
 int g_Cursor;
 ArrayList g_Order;
-Function g_PrintToChat;
-
-public void OnMapStart()
-{
-    LogMessage("---------------test3");
-    g_PrintToChat = GetFunctionByName(null, "__PrintToChat");
-}
 
 public void OnPluginStart()
 {
@@ -88,7 +81,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "chatnotice");
 
-    CreateTimer(g_Interval.FloatValue * 1.0, Timer_Notice);
+    CreateTimer(g_Interval.FloatValue * 1.0, Timer_Notice, _, TIMER_REPEAT);
 }
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
@@ -97,24 +90,15 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     g_Notices = CreateArray();
 
     CreateNative("ChatNotice_Register", Native_Register);
-    CreateNative("ChatNotice_LoadTranslations", Native_LoadTranslations);
-    LogMessage("---------------test4");
     return APLRes_Success;
-}
-
-public any Native_LoadTranslations(Handle plugin, int numParams)
-{
-    char file[32];
-    GetNativeString(1, file, sizeof(file))
-    LoadTranslations(file);
 }
 
 public any Native_Register(Handle plugin, int numParams)
 {
-    LogMessage("---------------test1");
     int idx;
     ArrayList args = CreateArray();
 
+    PushArrayCell(args, plugin);
     for(int i = 1; i <= numParams; i++)
     {
         PushArrayCell(args, GetNativeCell(i));
@@ -123,15 +107,6 @@ public any Native_Register(Handle plugin, int numParams)
     // Push
     PushArrayCell(g_Notices, args);
     PushArrayCell(g_Order, idx);
-}
-
-public void __PrintToChat(int client, char[] format, any ...)
-{
-    char buffer[1024], buffer2[1024];
-    SetGlobalTransTarget(client);
-    Format(buffer, sizeof(buffer), "\x01%s", format);
-    VFormat(buffer2, sizeof(buffer2), buffer, 3);
-    PrintToChat(client, buffer2);
 }
 
 public Action Timer_Notice(Handle timer)
@@ -152,13 +127,15 @@ public Action Timer_Notice(Handle timer)
     g_Cursor++;
 
     int len = GetArraySize(args);
+    Handle plugin = GetArrayCell(args, 0);
+    Function fn = GetFunctionByName(plugin, "ChatNotice_PrintToChat");
     
     for(int i = 1; i <= MaxClients; i++)
     {
         if(!IsClientInGame(i)) continue;
-        Call_StartFunction(null, g_PrintToChat);
+        Call_StartFunction(plugin, fn);
         Call_PushCell(i);
-        for(int j = 0; j < len; j++)
+        for(int j = 1; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
         Call_Finish();
