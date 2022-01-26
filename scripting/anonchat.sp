@@ -265,8 +265,12 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
     int chatNo = g_epoch[g_epoch_cursor + add];
     int chatNoPrinted = chatNo + 1;
 
-    // Set chatNo owner
+    // Set sender chatNo
     g_chatSteamIDIndices[chatNo] = g_clientSteamIDIndices[client];
+
+    // For admin
+    char team[32];
+    GetTeamName(GetClientTeam(client), team, sizeof(team));
 
     g_batch_cursor++;
 
@@ -291,7 +295,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 
         if(CheckCommandAccess(i, "sm_admin", ADMFLAG_GENERIC))
         {
-            PrintToChat(i, " \x04#%d %N: \x01%s", chatNoPrinted, client, sArgs);
+            PrintToChat(i, " \x04#%d <%s><%N>: \x01%s", chatNoPrinted, team, client, sArgs);
         }
         else
         {
