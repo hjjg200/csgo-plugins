@@ -143,7 +143,7 @@ public Action Timer_Notice(Handle timer)
         if(!IsClientInGame(i)) continue;
         Call_StartFunction(plugin, fn);
         Call_PushCell(i);
-        Cell_PushString(format);
+        Call_PushString(format);
         for(int j = 2; j < len; j++)
             Call_PushCell(GetArrayCell(args, j));
 
