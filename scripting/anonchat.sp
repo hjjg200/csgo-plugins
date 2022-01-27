@@ -380,7 +380,7 @@ public void OnClientPostAdminCheck(int client)
 {
     if(g_CvarNoVoice.IntValue == 1)
     {
-        SetClientListeningFlags(target, VOICE_MUTED);
+        SetClientListeningFlags(client, VOICE_MUTED);
     }
 
     UnmuteAll(client);
