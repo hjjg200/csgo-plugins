@@ -95,6 +95,8 @@ int g_batch[BATCH_SIZE];
 int g_epoch_cursor = 0;
 int g_batch_cursor = 0;
 
+ConVar g_CvarNoVoice;
+
 ArrayList g_steamIDs;
 
 bool g_clientMuteAll[MAXPLAYERS+1];
@@ -121,6 +123,11 @@ public void OnPluginStart()
         g_clientMuteAll[i] = false;
         g_clientMutedSteamIDMaps[i] = CreateTrie();
     }
+
+    g_CvarNoVoice = CreateConVar("sm_anonchat_no_voice", "1",
+        "Diable voice chat entirely");
+
+    AutoExecConfig(true, "anonchat");
 
     LoadTranslations("anonchat.phrases");
 
@@ -371,6 +378,11 @@ public int UnmuteAll(int client)
 
 public void OnClientPostAdminCheck(int client)
 {
+    if(g_CvarNoVoice.IntValue == 1)
+    {
+        SetClientListeningFlags(target, VOICE_MUTED);
+    }
+
     UnmuteAll(client);
     RegisterSteamID(client);
 }
