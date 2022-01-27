@@ -3,20 +3,20 @@
     "anonchat.command.mute"
     {
         "#format" "{1:s}"
-        "en" "{1} <chat No.> :: mute the player"
-        "ko" "{1} <채팅 번호> :: 유저 뮤트하기"
+        "en" "{1} <chat No.> → mute the player"
+        "ko" "{1} <채팅 번호> → 유저 뮤트하기"
     }
     "anonchat.command.muteAll"
     {
         "#format" "{1:s}"
-        "en" "{1} :: disable chat entirely"
-        "ko" "{1} :: 모든 채팅 비활성화하기"
+        "en" "{1} → disable chat entirely"
+        "ko" "{1} → 모든 채팅 비활성화하기"
     }
     "anonchat.command.unmuteAll"
     {
         "#format" "{1:s}"
-        "en" "{1} :: unmute players you muted"
-        "ko" "{1} :: 모든 뮤트 해제하기"
+        "en" "{1} → unmute players you muted"
+        "ko" "{1} → 모든 뮤트 해제하기"
     }
     "anonchat.invalidChatNo"
     {
