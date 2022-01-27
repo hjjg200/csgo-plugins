@@ -86,7 +86,7 @@ on map start {
  */
 
 #define EPOCH_SIZE 1000
-#define BATCH_SIZE 10
+#define BATCH_SIZE 50
 
 #define STEAM_ID_LENGTH 32
 
@@ -158,6 +158,10 @@ public Action Command_Mute(int client, int argc)
 
     switch(Mute(client, chatNo))
     {
+    case -2:
+    {
+        PrintToChat(client, " \x05%t", "anonchat.noMuteSelf");
+    }
     case -1:
     {
         PrintToChat(client, " \x05%t", "anonchat.userNotFound");
@@ -259,6 +263,7 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
     {
         g_epoch_cursor = 0;
     }
+    g_batch_cursor++;
 
     // Get chatNo
     int chatNo = g_epoch[g_epoch_cursor + add];
@@ -268,10 +273,9 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
     g_chatSteamIDIndices[chatNo] = g_clientSteamIDIndices[client];
 
     // For admin
-    char team[32];
+    char team[32], info[64];
     GetTeamName(GetClientTeam(client), team, sizeof(team));
-
-    g_batch_cursor++;
+    Format(info, sizeof(info), "<%s><%N>", team, client);
 
     char steamID[STEAM_ID_LENGTH];
     GetClientAuthId(client, AuthId_Steam3, steamID, STEAM_ID_LENGTH);
@@ -281,25 +285,25 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
         if(!IsClientInGame(i))
             continue;
 
-        if(i == client)
-        {
-            PrintToChat(i, " \x03#%d: \x01%s", chatNoPrinted, sArgs);
-            continue;
-        }
+        char color = (i == client) ? '\x03' : '\x04';
 
         StringMap muted = g_clientMutedSteamIDMaps[i];
-        bool ok;
-        if(GetTrieValue(muted, steamID, ok) || g_clientMuteAll[i] == true)
+        if(i != client && (GetTrieValue(muted, steamID, _) || g_clientMuteAll[i] == true))
             continue;
 
+        char message[1024];
         if(CheckCommandAccess(i, "sm_admin", ADMFLAG_GENERIC))
         {
-            PrintToChat(i, " \x04#%d <%s><%N>: \x01%s", chatNoPrinted, team, client, sArgs);
+            Format(message, sizeof(message), "#%d %s \x01%s", chatNoPrinted, info, sArgs);
         }
         else
         {
-            PrintToChat(i, " \x04#%d: \x01%s", chatNoPrinted, sArgs);
+            Format(message, sizeof(message), "#%d: \x01%s", chatNoPrinted, sArgs);
         }
+
+        // Print
+        PrintToChat(i, " %c%s", color, message);
+        PrintToConsole(i, message);
     }
     return Plugin_Handled;
 /*
@@ -327,6 +331,7 @@ grey2: \x0D
 1: success
 0: already muted
 -1: user not found
+-2: no auto-mute
  */
 public int Mute(int client, int chatNo)
 {
@@ -337,8 +342,12 @@ public int Mute(int client, int chatNo)
     char targetID[STEAM_ID_LENGTH];
     GetArrayString(g_steamIDs, targetIdx, targetID, STEAM_ID_LENGTH);
 
+    if(targetIdx == g_clientSteamIDIndices[client])
+        return -2;
+
     if(SetTrieValue(g_clientMutedSteamIDMaps[client], targetID, true, false))
         return 1;
+
     return 0;
 }
 

@@ -7,7 +7,7 @@ public Plugin myinfo =
 {
     name = "Revive",
     author = "hjjg200",
-    description = "Revive on spectatee",
+    description = "[CSGO] Revive on spectatee",
     version = "1.0",
     url = "http://www.sourcemod.net/"
 };
@@ -22,21 +22,20 @@ public Plugin myinfo =
 #define CS_SLOT_GRENADE 3 /**< Grenade slot (will only return one grenade). */
 #define CS_SLOT_C4 4 /**< C4 slot. */
 
-ConVar g_cvRevivePerRound;
+ConVar g_CvarRevivePerRound;
+ConVar g_CvarDummyBot;
 
 //
 new playerReviveCount[MAXPLAYERS + 1];
 
 public void OnPluginStart()
 {
-    g_cvRevivePerRound = CreateConVar("sm_revive_per_round",
-            "0",
-            "Sets the limit how many times a player can revive in a round",
-            FCVAR_NOTIFY,
-            true,
-            0.0,
-            false,
-            0.0);
+    g_CvarRevivePerRound = CreateConVar("sm_revive_per_round", "0",
+        "Sets the limit how many times a player can revive in a round",
+        FCVAR_NOTIFY, true, 0.0, false, 0.0);
+
+    g_CvarDummyBot = CreateConVar("sm_revive_dummy", "0",
+        "Add a dummy bot for each team so that players can use it as a revive point");
 
     // Register command
     RegConsoleCmd("sm_rv", Command_Revive);
@@ -51,11 +50,34 @@ public void OnPluginStart()
     ChatNotice_Register("\x05%t", "revive.bindTip", "bind v \"say !rv\"")
 }
 
+public void OnConfigsExecuted()
+{
+    if(g_CvarDummyBot.IntValue == 1)
+    {
+        // Adding bots trigger mp_autoteambalance to be adjusted
+        HookConVarChange(FindConVar("mp_autoteambalance"), _mpAutoBalanceHandler);
+        SetConVarInt(FindConVar("bot_quota"), 0);
+        SetConVarInt(FindConVar("bot_join_after_player"), 0);
+        ServerCommand("bot_add_t");
+        ServerCommand("bot_add_ct");
+    }
+}
+
+public void _mpAutoBalanceHandler(Handle cvar, const char[] oldValue, const char[] newValue)
+{
+    SetConVarInt(cvar, 0);
+}
+
 public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
 {
     for(int i = 1; i <= MaxClients; i++)
     {
         playerReviveCount[i] = 0;
+        if(g_CvarDummyBot.IntValue == 1 && IsClientInGame(i) && IsFakeClient(i))
+        {
+            // Make it stationary
+            SetEntityMoveType(i, MOVETYPE_NONE);
+        }
     }
 }
 
@@ -63,8 +85,8 @@ public void OnPlayerDeath(Handle event, const char[] name, bool dontBroadcast)
 {
     // TODO: show remaining revive count
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    PrintHintText(client, " \x05%t: \x01%d\n\x05%t", "revive.remainingLives", 
-        g_cvRevivePerRound.IntValue - playerReviveCount[client],
+    PrintHintText(client, "%t: %d\n%t", "revive.remainingLives", 
+        g_CvarRevivePerRound.IntValue - playerReviveCount[client],
         "revive.command", "!rv");
 }
 
@@ -114,7 +136,7 @@ public Action Command_Revive(int client, int argc)
         }
 
         // Check limit and deduct
-        if (playerReviveCount[client] >= g_cvRevivePerRound.IntValue)
+        if (playerReviveCount[client] >= g_CvarRevivePerRound.IntValue)
         {
             // TODO: show reached limit
             PrintHintText(client, " \x05%t", "revive.livesAllConsumed");
