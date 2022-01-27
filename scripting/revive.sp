@@ -54,13 +54,18 @@ public void OnConfigsExecuted()
 {
     if(g_CvarDummyBot.IntValue == 1)
     {
-        // Adding bots trigger mp_autoteambalance to be adjusted
-        HookConVarChange(FindConVar("mp_autoteambalance"), _mpAutoBalanceHandler);
-        SetConVarInt(FindConVar("bot_quota"), 0);
-        SetConVarInt(FindConVar("bot_join_after_player"), 0);
-        ServerCommand("bot_add_t");
-        ServerCommand("bot_add_ct");
+        CreateTimer(1.0, Timer_AddDummyBot);
     }
+}
+
+public Action Timer_AddDummyBot(Handle timer)
+{
+    // Adding bots trigger mp_autoteambalance to be adjusted
+    HookConVarChange(FindConVar("mp_autoteambalance"), _mpAutoBalanceHandler);
+    SetConVarInt(FindConVar("bot_quota"), 0);
+    SetConVarInt(FindConVar("bot_join_after_player"), 0);
+    ServerCommand("bot_add_t");
+    ServerCommand("bot_add_ct");
 }
 
 public void _mpAutoBalanceHandler(Handle cvar, const char[] oldValue, const char[] newValue)
