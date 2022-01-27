@@ -30,11 +30,11 @@ new playerReviveCount[MAXPLAYERS + 1];
 
 public void OnPluginStart()
 {
-    g_CvarRevivePerRound = CreateConVar("sm_revive_per_round", "0",
+    g_CvarRevivePerRound = CreateConVar("sm_revive_per_round", "2",
         "Sets the limit how many times a player can revive in a round",
         FCVAR_NOTIFY, true, 0.0, false, 0.0);
 
-    g_CvarDummyBot = CreateConVar("sm_revive_dummy", "0",
+    g_CvarDummyBot = CreateConVar("sm_revive_dummy", "1",
         "Add a dummy bot for each team so that players can use it as a revive point");
 
     // Register command
