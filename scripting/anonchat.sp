@@ -288,7 +288,8 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
         char color = (i == client) ? '\x03' : '\x04';
 
         StringMap muted = g_clientMutedSteamIDMaps[i];
-        if(i != client && (GetTrieValue(muted, steamID, _) || g_clientMuteAll[i] == true))
+        bool ok;
+        if(i != client && (GetTrieValue(muted, steamID, ok) || g_clientMuteAll[i] == true))
             continue;
 
         char message[1024];
