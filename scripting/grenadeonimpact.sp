@@ -46,28 +46,7 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
-    if(StrEqual(classname, "smokegrenade_projectile"))
-        SDKHook(entity, SDKHook_Spawn, OnSmokeSpawn);
-
     SDKHook(entity, SDKHook_StartTouch, OnStartTouch);
-}
-
-public void OnSmokeSpawn(int entity)
-{
-    SDKUnhook(entity, SDKHook_Spawn, OnSmokeSpawn);
-
-    int ref = EntIndexToEntRef(entity);
-    CreateTimer(0.0, Timer_SmokeHandler, ref);
-}
-
-public Action Timer_SmokeHandler(Handle timer, int ref)
-{
-    int entity = EntRefToEntIndex(ref);
-
-    if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
-
-    SetEntProp(entity, Prop_Data, "m_nNextThinkTick", -1);
-    return Plugin_Stop;
 }
 
 public void OnStartTouch(int entity)
@@ -90,6 +69,7 @@ public Action Timer_Detonate(Handle timer, int ref)
 
     if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
 
+    SetEntityMoveType(entity, MOVETYPE_NONE);
     SetEntProp(entity, Prop_Data, "m_nNextThinkTick", 1);
     SetEntProp(entity, Prop_Data, "m_takedamage", 2 );
     SetEntProp(entity, Prop_Data, "m_iHealth", 1 );
