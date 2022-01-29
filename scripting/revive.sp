@@ -82,12 +82,11 @@ public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
     for(int i = 1; i <= MaxClients; i++)
     {
         playerReviveCount[i] = 0;
-        if(g_CvarDummyBot.IntValue == 1 && IsClientInGame(i) && IsFakeClient(i))
-        {
-            // Make it stationary
-            //SetEntityMoveType(i, MOVETYPE_NONE);
-            SetConVarInt(FindConVar("bot_stop"), 1);
-        }
+    }
+    if(g_CvarDummyBot.IntValue == 1)
+    {
+        // Make it stationary
+        SetConVarInt(FindConVar("bot_stop"), 1);
     }
 }
 
