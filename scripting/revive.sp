@@ -37,6 +37,12 @@ public void OnPluginStart()
     g_CvarDummyBot = CreateConVar("sm_revive_dummy", "1",
         "Add a dummy bot for each team so that players can use it as a revive point");
 
+    if(g_CvarDummyBot.IntValue == 1)
+    {
+        // Adding bots trigger mp_autoteambalance to be adjusted
+        HookConVarChange(FindConVar("mp_autoteambalance"), _mpAutoBalanceHandler);
+    }
+
     // Register command
     RegConsoleCmd("sm_rv", Command_Revive);
 
@@ -60,8 +66,6 @@ public void OnConfigsExecuted()
 
 public Action Timer_AddDummyBot(Handle timer)
 {
-    // Adding bots trigger mp_autoteambalance to be adjusted
-    HookConVarChange(FindConVar("mp_autoteambalance"), _mpAutoBalanceHandler);
     SetConVarInt(FindConVar("bot_quota"), 0);
     SetConVarInt(FindConVar("bot_join_after_player"), 0);
     ServerCommand("bot_add_t");
