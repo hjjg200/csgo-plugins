@@ -58,8 +58,8 @@ public void OnStartTouch(int entity)
     // https://forums.alliedmods.net/archive/index.php/t-235247.html
     int ref = EntIndexToEntRef(entity);
 
-    // Wait 0.1 seconds for maps like smoke grenade fight
-    CreateTimer(0.1, Timer_Detonate, ref);
+    // Wait 0.01 seconds for maps like smoke grenade fight
+    CreateTimer(0.01, Timer_Detonate, ref);
 }
 
 // https://forums.alliedmods.net/showthread.php?p=1989016
@@ -70,6 +70,8 @@ public Action Timer_Detonate(Handle timer, int ref)
 
     if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
 
+    // Making stationary let smoke detonate mid-air
+    // tested working 2022 Jan
     SetEntityMoveType(entity, MOVETYPE_NONE);
     float v[3] = {0.0, 0.0, 0.0};
     TeleportEntity(entity, NULL_VECTOR, NULL_VECTOR, v);
