@@ -147,7 +147,7 @@ public Action Command_Mute(int client, int argc)
 
     if(argc != 1)
     {
-        ReplyToCommand(client, " \x05%t", "anonchat.command.mute", "!mu");
+        ReplyToCommand(client, " \x0f%t", "anonchat.command.mute", "!mu");
         return Plugin_Handled;
     }
 
@@ -160,7 +160,7 @@ public Action Command_Mute(int client, int argc)
     int chatNo = chatNoPrinted - 1;
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
     {
-        ReplyToCommand(client, " \x05%t", "anonchat.invalidChatNo");
+        ReplyToCommand(client, " \x0f%t", "anonchat.invalidChatNo");
         return Plugin_Handled;
     }
 
@@ -168,11 +168,11 @@ public Action Command_Mute(int client, int argc)
     {
     case -2:
     {
-        ReplyToCommand(client, " \x05%t", "anonchat.noMuteSelf");
+        ReplyToCommand(client, " \x0f%t", "anonchat.noMuteSelf");
     }
     case -1:
     {
-        ReplyToCommand(client, " \x05%t", "anonchat.userNotFound");
+        ReplyToCommand(client, " \x0f%t", "anonchat.userNotFound");
     }
     case 0:
     {
