@@ -70,6 +70,8 @@ public Action Timer_Detonate(Handle timer, int ref)
     if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
 
     SetEntityMoveType(entity, MOVETYPE_NONE);
+    TeleportEntity(entity, NULL_VECTOR, NULL_VECTOR, {0.0, 0.0, 0.0});
+
     SetEntProp(entity, Prop_Data, "m_nNextThinkTick", 1);
     SetEntProp(entity, Prop_Data, "m_takedamage", 2 );
     SetEntProp(entity, Prop_Data, "m_iHealth", 1 );
