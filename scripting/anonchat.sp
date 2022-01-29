@@ -1,6 +1,7 @@
 #include <sourcemod>
 #include <sdktools>
 #include <chatnotice>
+#include <basecomm>
 
 public Plugin myinfo =
 {
@@ -380,7 +381,7 @@ public void OnClientPostAdminCheck(int client)
 {
     if(g_CvarNoVoice.IntValue == 1)
     {
-        SetClientListeningFlags(client, VOICE_MUTED);
+        BaseComm_SetClientMute(client, true);
     }
 
     UnmuteAll(client);
