@@ -46,18 +46,12 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
-    SDKHook(entity, SDKHook_Spawn, OnEntitySpawn);
+    SDKHook(entity, SDKHook_StartTouch, OnStartTouch);
 }
 
-public void OnEntitySpawn(int entity)
+public void OnStartTouch(int entity)
 {
-    SDKUnhook(entity, SDKHook_Spawn, OnEntitySpawn);
-    SDKHook(entity, SDKHook_ShouldCollide, OnShouldCollide);
-}
-
-public void OnShouldCollide(int entity)
-{
-    SDKUnhook(entity, SDKHook_ShouldCollide, OnShouldCollide);
+    SDKUnhook(entity, SDKHook_StartTouch, OnStartTouch);
 
     // Not using EntToRef might cause problem
     // https://forums.alliedmods.net/archive/index.php/t-235247.html
