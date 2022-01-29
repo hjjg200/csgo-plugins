@@ -46,6 +46,12 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
+    SDKHook(entity, SDKHook_Spawn, OnEntitySpawn);
+}
+
+public void OnEntitySpawn(int entity)
+{
+    SDKUnhook(entity, SDKHook_Spawn, OnEntitySpawn);
     SDKHook(entity, SDKHook_ShouldCollide, OnShouldCollide);
 }
 
