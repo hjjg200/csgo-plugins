@@ -56,6 +56,7 @@ public void OnShouldCollide(int entity)
     // Not using EntToRef might cause problem
     // https://forums.alliedmods.net/archive/index.php/t-235247.html
     int ref = EntIndexToEntRef(entity);
+    PrintToChatAll("ok");
 
     // Wait 0.2 seconds for maps like smoke grenade fight
     CreateTimer(0.2, Timer_Detonate, ref);
