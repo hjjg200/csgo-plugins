@@ -35,7 +35,7 @@ public void OnPluginStart()
 {
     g_ProjectileKeys = CreateTrie();
     SetTrieValue(g_ProjectileKeys, "hegrenade_projectile", true);
-    SetTrieValue(g_ProjectileKeys, "flashbang_projectile", true);
+    //SetTrieValue(g_ProjectileKeys, "flashbang_projectile", true);
     SetTrieValue(g_ProjectileKeys, "smokegrenade_projectile", true);
 }
 
@@ -46,7 +46,28 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
+    if(StrEqual(classname, "smokegrenade_projectile"))
+        SDKHook(entity, SDKHook_Spawn, OnSmokeSpawn);
+
     SDKHook(entity, SDKHook_StartTouch, OnStartTouch);
+}
+
+public void OnSmokeSpawn(int entity)
+{
+    SDKUnhook(entity, SDKHook_Spawn, OnSmokeSpawn);
+
+    int ref = EntIndexToEntRef(entity);
+    CreateTimer(0.0, Timer_SmokeHandler, ref);
+}
+
+public Action Timer_SmokeHandler(Handle timer, int ref)
+{
+    int entity = EntRefToEntIndex(ref);
+
+    if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
+
+    SetEntProp(entity, Prop_Data, "m_nNextThinkTick", -1);
+    return Plugin_Stop;
 }
 
 public void OnStartTouch(int entity)
@@ -56,10 +77,9 @@ public void OnStartTouch(int entity)
     // Not using EntToRef might cause problem
     // https://forums.alliedmods.net/archive/index.php/t-235247.html
     int ref = EntIndexToEntRef(entity);
-    PrintToChatAll("ok");
 
-    // Wait 0.2 seconds for maps like smoke grenade fight
-    CreateTimer(0.2, Timer_Detonate, ref);
+    // Wait 0.1 seconds for maps like smoke grenade fight
+    CreateTimer(0.1, Timer_Detonate, ref);
 }
 
 // https://forums.alliedmods.net/showthread.php?p=1989016
