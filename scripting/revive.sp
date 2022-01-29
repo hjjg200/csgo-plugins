@@ -85,7 +85,8 @@ public void OnRoundStart(Handle event, const char[] name, bool dontBroadcast)
         if(g_CvarDummyBot.IntValue == 1 && IsClientInGame(i) && IsFakeClient(i))
         {
             // Make it stationary
-            SetEntityMoveType(i, MOVETYPE_NONE);
+            //SetEntityMoveType(i, MOVETYPE_NONE);
+            SetConVarInt(FindConVar("bot_stop"), 1);
         }
     }
 }
