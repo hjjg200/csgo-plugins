@@ -127,7 +127,7 @@ public Action Command_Revive(int client, int argc)
         return Plugin_Handled;
 
     int target = GetEntPropEnt(client, Prop_Send, "m_hObserverTarget");
-    if (IsClientInGame(target))
+    if (IsPlayerAlive(target))
     {
         // Check same team
         int team0, team1;
@@ -136,7 +136,7 @@ public Action Command_Revive(int client, int argc)
         if (team0 != team1)
         {
             // TODO: say you can only revive from a teammate
-            PrintHintText(client, " \x05%t", "revive.teammatesOnly");
+            PrintCenterText(client, " \x05%t", "revive.teammatesOnly");
             return Plugin_Handled;
         }
 
@@ -144,7 +144,7 @@ public Action Command_Revive(int client, int argc)
         if (playerReviveCount[client] >= g_CvarRevivePerRound.IntValue)
         {
             // TODO: show reached limit
-            PrintHintText(client, " \x05%t", "revive.livesAllConsumed");
+            PrintCenterText(client, " \x05%t", "revive.livesAllConsumed");
             return Plugin_Handled;
         }
         playerReviveCount[client]++;

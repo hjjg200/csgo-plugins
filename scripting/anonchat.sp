@@ -147,7 +147,7 @@ public Action Command_Mute(int client, int argc)
 
     if(argc != 1)
     {
-        PrintToChat(client, " \x05%t", "anonchat.command.mute", "!mu");
+        ReplyToCommand(client, " \x05%t", "anonchat.command.mute", "!mu");
         return Plugin_Handled;
     }
 
@@ -160,7 +160,7 @@ public Action Command_Mute(int client, int argc)
     int chatNo = chatNoPrinted - 1;
     if(chatNo < 0 || chatNo >= EPOCH_SIZE)
     {
-        PrintToChat(client, " \x05%t", "anonchat.invalidChatNo");
+        ReplyToCommand(client, " \x05%t", "anonchat.invalidChatNo");
         return Plugin_Handled;
     }
 
@@ -168,19 +168,19 @@ public Action Command_Mute(int client, int argc)
     {
     case -2:
     {
-        PrintToChat(client, " \x05%t", "anonchat.noMuteSelf");
+        ReplyToCommand(client, " \x05%t", "anonchat.noMuteSelf");
     }
     case -1:
     {
-        PrintToChat(client, " \x05%t", "anonchat.userNotFound");
+        ReplyToCommand(client, " \x05%t", "anonchat.userNotFound");
     }
     case 0:
     {
-        PrintToChat(client, " \x05%t", "anonchat.alreadyMuted");
+        ReplyToCommand(client, " \x05%t", "anonchat.alreadyMuted");
     }
     case 1:
     {
-        PrintToChat(client, " \x05%t", "anonchat.mutedPlayer");
+        ReplyToCommand(client, " \x05%t", "anonchat.mutedPlayer");
     }
     }
 
@@ -192,7 +192,7 @@ public Action Command_MuteAll(int client, int argc)
     if(client < 1) return Plugin_Handled;
 
     MuteAll(client);
-    PrintToChat(client, " \x05%t", "anonchat.mutedAll");
+    ReplyToCommand(client, " \x05%t", "anonchat.mutedAll");
 
     return Plugin_Handled;
 }
@@ -202,7 +202,7 @@ public Action Command_UnmuteAll(int client, int argc)
     if(client < 1) return Plugin_Handled;
 
     UnmuteAll(client);
-    PrintToChat(client, " \x05%t", "anonchat.unmutedAll");
+    ReplyToCommand(client, " \x05%t", "anonchat.unmutedAll");
     
     return Plugin_Handled;
 }
