@@ -10,10 +10,11 @@ public Plugin myinfo =
 };
 
 // https://developer.valvesoftware.com/wiki/Collision_groups
-#define COLLISION_GROUP_DEBRIS_TRIGGER 2
+// In CSGO, projectiles doesn't collide with 2
+//#define COLLISION_GROUP_DEBRIS_TRIGGER 2
 #define COLLISION_GROUP_INTERACTIVE_DEBRIS 3
 #define COLLISION_GROUP_PLAYER 5
-#define COLLISION_GROUP_PUSHAWAY 17
+//#define COLLISION_GROUP_PUSHAWAY 17
 
 int g_CollisionGroup;
 
