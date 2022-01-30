@@ -18,7 +18,7 @@ int g_CollisionGroup;
 
 public void OnPluginStart()
 {
-    g_CollisionGroup = FindSendPropOffs("CBaseEntity", "m_CollisionGroup");
+    g_CollisionGroup = FindSendPropInfo("CBaseEntity", "m_CollisionGroup");
 
     HookEvent("player_spawn", OnPlayerSpawn, EventHookMode_Post);
 }
