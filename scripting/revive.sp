@@ -183,3 +183,8 @@ public Action Command_Revive(int client, int argc)
 
     return Plugin_Handled;
 }
+
+public void OnClientPostAdminCheck(int client)
+{
+    playerReviveCount[client] = g_CvarRevivePerRound.IntValue;
+}
