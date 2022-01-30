@@ -46,12 +46,12 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
-    SDKHook(entity, SDKHook_EndTouchPost, OnTouchPost);
+    SDKHook(entity, SDKHook_StartTouchPost, OnTouchPost);
 }
 
 public void OnTouchPost(int entity)
 {
-    SDKUnhook(entity, SDKHook_EndTouchPost, OnTouchPost);
+    SDKUnhook(entity, SDKHook_StartTouchPost, OnTouchPost);
 
     // Making stationary let smoke detonate mid-air
     // tested working 2022 Jan
