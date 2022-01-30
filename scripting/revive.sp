@@ -66,6 +66,7 @@ public void OnConfigsExecuted()
 
 public Action Timer_AddDummyBot(Handle timer)
 {
+    SetConVarString(FindConVar("bot_quota_mode"), "normal");
     SetConVarInt(FindConVar("bot_quota"), 0);
     SetConVarInt(FindConVar("bot_join_after_player"), 0);
     ServerCommand("bot_add_t");
