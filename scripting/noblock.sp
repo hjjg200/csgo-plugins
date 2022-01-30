@@ -11,7 +11,7 @@ public Plugin myinfo =
 
 // https://developer.valvesoftware.com/wiki/Collision_groups
 #define COLLISION_GROUP_DEBRIS_TRIGGER 2
-#define COLLISION_GROUP_INTERACTIVE 4
+#define COLLISION_GROUP_INTERACTIVE_DEBRIS 3
 #define COLLISION_GROUP_PLAYER 5
 #define COLLISION_GROUP_PUSHAWAY 17
 
@@ -29,5 +29,5 @@ public void OnPlayerSpawn(Event event, const char[] name, bool dontBroadcast)
     int userid = GetEventInt(event, "userid");
     int client = GetClientOfUserId(userid);
 
-    SetEntData(client, g_CollisionGroup, COLLISION_GROUP_INTERACTIVE, 4, true);
+    SetEntData(client, g_CollisionGroup, COLLISION_GROUP_INTERACTIVE_DEBRIS, 4, true);
 }
