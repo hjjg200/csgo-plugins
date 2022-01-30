@@ -36,7 +36,6 @@ public void OnPluginStart()
 {
     g_ProjectileKeys = CreateTrie();
     SetTrieValue(g_ProjectileKeys, "hegrenade_projectile", true);
-    //SetTrieValue(g_ProjectileKeys, "flashbang_projectile", true);
     SetTrieValue(g_ProjectileKeys, "smokegrenade_projectile", true);
 }
 
@@ -47,28 +46,12 @@ public void OnEntityCreated(int entity, const char[] classname)
     bool ok;
     if(!GetTrieValue(g_ProjectileKeys, classname, ok)) return;
 
-    SDKHook(entity, SDKHook_StartTouch, OnStartTouch);
+    SDKHook(entity, SDKHook_TouchPost, OnTouchPost);
 }
 
-public void OnStartTouch(int entity)
+public void OnTouchPost(int entity)
 {
-    SDKUnhook(entity, SDKHook_StartTouch, OnStartTouch);
-
-    // Not using EntToRef might cause problem
-    // https://forums.alliedmods.net/archive/index.php/t-235247.html
-    int ref = EntIndexToEntRef(entity);
-
-    // Wait 0.01 seconds for maps like smoke grenade fight
-    CreateTimer(0.01, Timer_Detonate, ref);
-}
-
-// https://forums.alliedmods.net/showthread.php?p=1989016
-// https://forums.alliedmods.net/showthread.php?p=1985693#post1985693
-public Action Timer_Detonate(Handle timer, int ref)
-{
-    int entity = EntRefToEntIndex(ref);
-
-    if(entity == INVALID_ENT_REFERENCE) return Plugin_Stop;
+    SDKUnhook(entity, SDKHook_TouchPost, OnTouchPost);
 
     // Making stationary let smoke detonate mid-air
     // tested working 2022 Jan
@@ -76,10 +59,10 @@ public Action Timer_Detonate(Handle timer, int ref)
     float v[3] = {0.0, 0.0, 0.0};
     TeleportEntity(entity, NULL_VECTOR, NULL_VECTOR, v);
 
+    // https://forums.alliedmods.net/showthread.php?p=1989016
+    // https://forums.alliedmods.net/showthread.php?p=1985693#post1985693
     SetEntProp(entity, Prop_Data, "m_nNextThinkTick", 1);
-    SetEntProp(entity, Prop_Data, "m_takedamage", 2 );
-    SetEntProp(entity, Prop_Data, "m_iHealth", 1 );
+    SetEntProp(entity, Prop_Data, "m_takedamage", 2);
+    SetEntProp(entity, Prop_Data, "m_iHealth", 1);
     SDKHooks_TakeDamage(entity, 0, 0, 1.0);
-
-    return Plugin_Stop;
 }
