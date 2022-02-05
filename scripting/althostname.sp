@@ -13,7 +13,7 @@ ConVar g_CvarHostname;
 ConVar g_CvarInterval;
 ConVar g_CvarAlt1;
 ConVar g_CvarAlt2;
-CreateStack g_Hostnames;
+ArrayStack g_Hostnames;
 
 public void OnPluginStart()
 {
