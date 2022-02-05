@@ -13,7 +13,7 @@ ConVar g_CvarHostname;
 ConVar g_CvarInterval;
 ConVar g_CvarAlt1;
 ConVar g_CvarAlt2;
-ArrayStack g_Hostnames;
+ArrayList g_Hostnames;
 
 public void OnPluginStart()
 {
@@ -27,7 +27,7 @@ public void OnPluginStart()
 
     AutoExecConfig(true, "althostname");
 
-    g_Hostnames = CreateStack(256);
+    g_Hostnames = CreateArray(256);
     PushIfNotEmpty(g_CvarAlt1);
     PushIfNotEmpty(g_CvarAlt2);
     PushIfNotEmpty(g_CvarHostname);
@@ -38,11 +38,12 @@ public void OnPluginStart()
 public Action Timer_Alternate(Handle timer)
 {
     char name[256];
-    PopStackString(g_Hostnames, name, sizeof(name));
-    PushStackString(g_Hostnames, name);
+    GetArrayString(g_Hostnames, 0, name, sizeof(name));
+    RemoveFromArray(g_Hostnames, 0);
+    PushArrayString(g_Hostnames, name);
 
     PrintToConsoleAll(name);
-    SetConVarString(g_CvarHostname, name);
+    //SetConVarString(g_CvarHostname, name);
     ScheduleTimer();
 }
 
@@ -59,5 +60,5 @@ PushIfNotEmpty(ConVar alt)
     if(strlen(name) == 0)
         return;
 
-    PushStackString(g_Hostnames, name);
+    PushArrayString(g_Hostnames, name);
 }
