@@ -47,7 +47,7 @@ public Action Timer_Alternate(Handle timer)
 
 ScheduleTimer()
 {
-    CreateTimer(60.0 * GetConVarFloat(g_CvarInterval), Timer_Alternate);
+    CreateTimer(6.0 * GetConVarFloat(g_CvarInterval), Timer_Alternate);
 }
 
 PushIfNotEmpty(ConVar alt)
