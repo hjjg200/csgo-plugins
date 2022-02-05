@@ -25,8 +25,6 @@ public void OnPluginStart()
     g_CvarAlt1 = CreateConVar("sm_althostname_1", "", "First alternative hostname");
     g_CvarAlt2 = CreateConVar("sm_althostname_2", "", "Second alternative hostname");
 
-    AutoExecConfig(true, "althostname");
-
     g_Hostnames = CreateArray(256);
     PushIfNotEmpty(g_CvarAlt1);
     PushIfNotEmpty(g_CvarAlt2);
@@ -42,14 +40,13 @@ public Action Timer_Alternate(Handle timer)
     RemoveFromArray(g_Hostnames, 0);
     PushArrayString(g_Hostnames, name);
 
-    PrintToConsoleAll(name);
-    //SetConVarString(g_CvarHostname, name);
+    SetConVarString(g_CvarHostname, name);
     ScheduleTimer();
 }
 
 ScheduleTimer()
 {
-    CreateTimer(6.0 * GetConVarFloat(g_CvarInterval), Timer_Alternate);
+    CreateTimer(60.0 * GetConVarFloat(g_CvarInterval), Timer_Alternate);
 }
 
 PushIfNotEmpty(ConVar alt)
