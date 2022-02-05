@@ -41,6 +41,7 @@ public Action Timer_Alternate(Handle timer)
     PopStackString(g_Hostnames, name, sizeof(name));
     PushStackString(g_Hostnames, name);
 
+    PrintToConsoleAll(name);
     SetConVarString(g_CvarHostname, name);
     ScheduleTimer();
 }
